@@ -1,27 +1,20 @@
 import React, { Component } from "react";
-import Account from "../Account/Account";
-import LoginForm from "../LoginForm/LoginForm";
+import Account from "../../../containers/Auth/Account/Account";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import classes from "./Toolbar.module.css";
 import { connect } from "react-redux";
 
 class Toolbar extends Component {
   render() {
-    let loginForm = null;
-    if (!this.props.isAuthenticated) {
-      loginForm = <LoginForm />;
+    let authForm = null;
+    if (this.props.isAuthenticated) {
+      authForm = <Account username={this.props.userName} />;
     }
     return (
       <header className={classes.Toolbar}>
-        <a href='/' className={classes.ToolbarHeaderLink}>
-          Dating App
-        </a>
         <div>Logo</div>
-        <NavigationItems isLoggedIn={this.props.isAuthenticated} />
-        {loginForm}
-        {this.props.isAuthenticated ? (
-          <Account username={this.props.userName} />
-        ) : null}
+        <NavigationItems isAuthenticated={this.props.isAuthenticated} />
+        {authForm}
       </header>
     );
   }

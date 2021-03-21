@@ -1,5 +1,5 @@
+import axios from "axios";
 import * as actionTypes from "./actionTypes";
-import AccountService from "../../services/AccountService";
 import * as localStorageConst from "../localStorageConst";
 
 export const authStart = () => {
@@ -24,9 +24,7 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem(localStorageConst.AUTH_TOKEN);
-  //localStorage.removeItem("expirationDate");
-  localStorage.removeItem(localStorageConst.AUTH_USERNAME);
+  localStorage.removeItem(localStorageConst.USER_DATA);
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -49,64 +47,23 @@ export const auth = (email, password, isSignUp) => {
     };
 
     if (!isSignUp) {
-      AccountService.login(authData)
+      axios
+        .post("/account/login", authData)
         .then((response) => {
-          // const expirationDate = new Date(
-          //   new Date().getTime() + response.data.expiresIn * 1000
-          // );
-          localStorage.setItem(
-            localStorageConst.AUTH_TOKEN,
-            response.data.token
-          );
-          //localStorage.setItem("expirationDate", expirationDate.toDateString());
-          localStorage.setItem(
-            localStorageConst.AUTH_USERNAME,
-            response.data.userName
-          );
-          dispatch(authSuccess(response.data.token, response.data.userName));
-          //dispatch(checkAuthTimeout(response.data.expiresIn));
+          const data = response.data;
+          if (data) {
+            localStorage.setItem(
+              localStorageConst.USER_DATA,
+              JSON.stringify(data)
+            );
+            dispatch(authSuccess(data.token, data.userName));
+          }
         })
         .catch((e) => {
           dispatch(authFail(e.response.data.error));
         });
     } else {
-      AccountService.register(authData)
-        .then((response) => {
-          console.log(response);
-          // const expirationDate = new Date(
-          //   new Date().getTime() + response.data.expiresIn * 1000
-          // );
-          localStorage.setItem(
-            localStorageConst.AUTH_TOKEN,
-            response.data.token
-          );
-          //localStorage.setItem("expirationDate", expirationDate.toDateString());
-          localStorage.setItem(
-            localStorageConst.AUTH_USERNAME,
-            response.data.userName
-          );
-          dispatch(authSuccess(response.data.token, response.data.userName));
-          //dispatch(checkAuthTimeout(response.data.expiresIn));
-        })
-        .catch((e) => {
-          dispatch(authFail(e.response.data.error));
-        });
     }
-    // axios
-    //   .post(url, authData)
-    //   .then((response) => {
-    //     const expirationDate = new Date(
-    //       new Date().getTime() + response.data.expiresIn * 1000
-    //     );
-    //     localStorage.setItem("token", response.data.idToken);
-    //     localStorage.setItem("expirationDate", expirationDate.toDateString());
-    //     localStorage.setItem("userId", response.data.userId);
-    //     dispatch(authSuccess(response.data.idToken, response.data.localId));
-    //     dispatch(checkAuthTimeout(response.data.expiresIn));
-    //   })
-    //   .catch((e) => {
-    //     dispatch(authFail(e.response.data.error));
-    //   });
   };
 };
 
@@ -119,22 +76,11 @@ export const setAuthRedirectPath = (path) => {
 
 export const authCheckState = () => {
   return (dispatch) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    const user = JSON.parse(localStorage.getItem(localStorageConst.USER_DATA));
+    if (!user) {
       dispatch(logout());
     } else {
-      const expirationDate = new Date(localStorage.getItem("expirationDate"));
-      if (expirationDate <= new Date()) {
-        dispatch(logout());
-      } else {
-        const userId = localStorage.getItem("userId");
-        dispatch(authSuccess(token, userId));
-        dispatch(
-          checkAuthTimeout(
-            (expirationDate.getTime() - new Date().getTime()) / 1000
-          )
-        );
-      }
+      dispatch(authSuccess(user.token, user.userName));
     }
   };
 };

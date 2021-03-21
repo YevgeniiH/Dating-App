@@ -1,22 +1,24 @@
 import React, { Component } from "react";
+import NavigationItem from "./NavigationItem/NavigationItem";
 import classes from "./NavigationItems.module.css";
 
 export default class NavigationItems extends Component {
   render() {
-    const navigation = this.props.isLoggedIn ? (
+    const nav = (
       <ul className={classes.NavigationItems}>
-        <li key='1' className={classes.NavigationItem}>
-          <a href='/'>Matches</a>
-        </li>
-        <li key='2' className={classes.NavigationItem}>
-          <a href='/'>Lists</a>
-        </li>
-        <li key='3' className={classes.NavigationItem}>
-          <a href='/'>Messages</a>
-        </li>
+        <NavigationItem link='/'>Dating App</NavigationItem>
+        {this.props.isAuthenticated ? (
+          <ul className={classes.NavigationItems}>
+            <NavigationItem link='/matches'>Matches</NavigationItem>
+            <NavigationItem link='/lists'>Lists</NavigationItem>
+            <NavigationItem link='/messages'>Messages</NavigationItem>
+          </ul>
+        ) : null}
+        {!this.props.isAuthenticated ? (
+          <NavigationItem link='/auth'>Authenticate</NavigationItem>
+        ) : null}
       </ul>
-    ) : null;
-
-    return <React.Fragment>{navigation}</React.Fragment>;
+    );
+    return <React.Fragment>{nav}</React.Fragment>;
   }
 }

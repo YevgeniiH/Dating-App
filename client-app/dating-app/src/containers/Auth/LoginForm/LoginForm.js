@@ -4,6 +4,7 @@ import { checkValidity, updateObject } from "../../../shared/utility";
 import { Form, FormControl, FormGroup, Button } from "react-bootstrap";
 import * as actions from "../../../store/actions/index";
 import classes from "./LoginForm.module.css";
+import { Redirect } from "react-router";
 
 class LoginForm extends Component {
   state = {
@@ -71,6 +72,11 @@ class LoginForm extends Component {
   };
 
   render() {
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+    }
+
     const formElementsArray = [];
     for (let key in this.state.controls) {
       formElementsArray.push({
@@ -92,7 +98,8 @@ class LoginForm extends Component {
 
     return (
       <div className={classes.LoginForm}>
-        <Form inline onSubmit={this.loginHandler} autoComplete='off'>
+        {authRedirect}
+        <Form onSubmit={this.loginHandler} autoComplete='off'>
           {form}
           <Button type='submit' variant='primary'>
             Login
