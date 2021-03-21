@@ -6,7 +6,7 @@ export default class Layout extends Component {
   render() {
     return (
       <React.Fragment>
-        <Toolbar />
+        <Toolbar isAuth={false} menuClicked={null} />
         <main className={classes.Content}>{this.props.children}</main>
       </React.Fragment>
     );

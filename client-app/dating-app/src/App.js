@@ -4,18 +4,9 @@ import "./App.css";
 import axios from "axios";
 import Layout from "./components/Layout/Layout";
 
-type user = {
-  userName: string;
-  password: string;
-};
 
-interface AppState {
-  items: Array<user>;
-  error: any;
-  isLoaded: boolean;
-}
-class App extends React.Component<{}, AppState> {
-  readonly state: Readonly<AppState> = {
+class App extends React.Component {
+  state = {
     items: [],
     error: null,
     isLoaded: false,

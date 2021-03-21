@@ -4,17 +4,10 @@ import Account from "../Account/Account";
 import LoginForm from "../LoginForm/LoginForm";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import classes from "./Toolbar.module.css";
+import { connect } from "react-redux";
 
-type ToolbarState = {
-  isLoggedIn: boolean;
-  loginInfo: {
-    username: string;
-    password: string;
-  };
-};
-
-export default class Toolbar extends Component<{}, ToolbarState> {
-  readonly state: Readonly<ToolbarState> = {
+class Toolbar extends Component {
+  state = {
     loginInfo: {
       username: "",
       password: "",
@@ -22,8 +15,8 @@ export default class Toolbar extends Component<{}, ToolbarState> {
     isLoggedIn: false,
   };
 
-  login = (event: any) => {
-    AccountService.login(this.state.loginInfo)
+  login = (event) => {
+    AccountService.login(this.props.auth)
       .then((result) => {
         this.setState({ isLoggedIn: true });
         console.log(this.state.isLoggedIn);
@@ -33,7 +26,7 @@ export default class Toolbar extends Component<{}, ToolbarState> {
     event.preventDefault();
   };
 
-  logout = (event: any) => {
+  logout = (event) => {
     this.setState({
       isLoggedIn: false,
       loginInfo: {
@@ -44,7 +37,7 @@ export default class Toolbar extends Component<{}, ToolbarState> {
     event.preventDefault();
   };
 
-  handleInputChange = (event: any) => {
+  handleInputChange = (event) => {
     const value = event.target.value;
     if (event.target.type === "text") {
       this.setState((prevState) => ({
@@ -91,3 +84,11 @@ export default class Toolbar extends Component<{}, ToolbarState> {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps)(Toolbar);

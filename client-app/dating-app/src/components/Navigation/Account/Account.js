@@ -1,20 +1,8 @@
 import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
 
-type AccountProps = {
-  isLoggedIn: boolean;
-  loginInfo: {
-    username: string;
-  };
-  logout: any;
-};
-
-type AccountState = {
-  dropdownOpen: boolean;
-};
-
-class Account extends Component<AccountProps, AccountState> {
-  readonly state: Readonly<AccountState> = {
+class Account extends Component {
+  state = {
     dropdownOpen: false,
   };
 

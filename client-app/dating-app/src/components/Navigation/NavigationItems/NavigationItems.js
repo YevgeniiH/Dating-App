@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import classes from "./NavigationItems.module.css";
 
-type NavigationItemsProps = {
-  isLoggedIn: boolean;
-};
-
-export default class NavigationItems extends Component<NavigationItemsProps> {
+export default class NavigationItems extends Component {
   render() {
     const navigation = this.props.isLoggedIn ? (
       <ul className={classes.NavigationItems}>

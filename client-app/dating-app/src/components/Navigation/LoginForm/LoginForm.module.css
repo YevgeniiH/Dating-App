@@ -1,5 +1,7 @@
 .LoginForm{
- background-color: transparent;
+ background-color: red;
+    text-align: center;
+    padding: 10px;
 }
 
 .LoginForm input{
