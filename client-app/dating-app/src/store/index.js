@@ -1,8 +1,19 @@
-import { combineReducers, createStore } from 'redux';
-import AuthReducer from './reducers/auth';
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import thunk from "redux-thunk";
+import AuthReducer from "./reducers/auth";
+
+const composeEnhancers =
+  (process.env.NODE_ENV === "development"
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : null) || compose;
+
+const rootReducer = combineReducers({
+  auth: AuthReducer,
+});
 
 const store = createStore(
-    combineReducers({
-        auth: AuthReducer
-}));
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+
 export default store;

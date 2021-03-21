@@ -1,0 +1,9 @@
+.Account a {
+  background-color: white;
+  color: black;
+}
+
+.Account a:hover {
+  background-color: rgb(216, 215, 215);
+  color: black;
+}

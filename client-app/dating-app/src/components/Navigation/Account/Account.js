@@ -1,39 +1,44 @@
 import React, { Component } from "react";
-import { Dropdown } from "react-bootstrap";
+import { connect } from "react-redux";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import * as actions from "../../../store/actions/index";
+import classes from "./Account.module.css";
 
 class Account extends Component {
-  state = {
-    dropdownOpen: false,
-  };
-
-  toggle = () => {
-    this.setState((prevState) => ({
-      dropdownOpen: !prevState.dropdownOpen,
-    }));
+  logoutHandler = (event) => {
+    event.preventDefault();
+    this.props.onLogout();
   };
 
   render() {
+    const title = "Welcome " + this.props.username;
     return (
-      <div>
-        {this.props.isLoggedIn && (
-          <Dropdown onToggle={this.toggle}>
-            <Dropdown.Toggle>
-              Welcome {this.props.loginInfo.username}
-            </Dropdown.Toggle>
-            {this.state.dropdownOpen && (
-              <Dropdown.Menu align='right'>
-                <Dropdown.Item>Edit profile</Dropdown.Item>
-                <Dropdown.Item divider />
-                <Dropdown.Item onClick={this.props.logout}>
-                  Logout
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            )}
-          </Dropdown>
-        )}
+      <div className={classes.Account}>
+        <DropdownButton
+          title={title}
+          menuAlign='right'
+          id='account_dropdown'
+          variant='flat'>
+          <Dropdown.Item>Edit profile</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item onClick={this.logoutHandler}>Logout</Dropdown.Item>
+        </DropdownButton>
       </div>
     );
   }
 }
 
-export default Account;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogout: () => dispatch(actions.logout()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

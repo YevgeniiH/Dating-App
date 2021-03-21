@@ -1,28 +1,27 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { checkValidity, updateObject } from "../../../shared/utility";
-import Button from "../../UI/Button/Button";
-import Input from "../../UI/Input/Input";
+import { Form, FormControl, FormGroup, Button } from "react-bootstrap";
+import * as actions from "../../../store/actions/index";
 import classes from "./LoginForm.module.css";
 
 class LoginForm extends Component {
   state = {
     controls: {
       email: {
-        elementType: "input",
         elementConfig: {
-          type: "email",
+          type: "text",
           placeholder: "Email",
         },
         value: "",
         validation: {
           required: true,
-          isEmail: true,
+          //isEmail: true,
         },
         isValid: false,
         touched: false,
       },
       password: {
-        elementType: "input",
         elementConfig: {
           type: "password",
           placeholder: "Password",
@@ -53,6 +52,24 @@ class LoginForm extends Component {
     this.setState({ controls: updatedControls });
   };
 
+  loginHandler = (event) => {
+    event.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value,
+      false
+    );
+  };
+
+  registerHandler = (event) => {
+    event.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value,
+      true
+    );
+  };
+
   render() {
     const formElementsArray = [];
     for (let key in this.state.controls) {
@@ -63,29 +80,44 @@ class LoginForm extends Component {
     }
 
     let form = formElementsArray.map((el) => (
-      <Input
-        key={el.id}
-        label={null}
-        elementType={el.config.elementType}
-        elementConfig={el.config.elementConfig}
-        value={el.config.value}
-        invalid={!el.config.isValid}
-        shouldValidate={el.config.validation}
-        touched={el.config.touched}
-        changed={(event) => this.inputChangedHandler(event, el.id)}
-      />
+      <FormGroup key={el.id}>
+        <FormControl
+          type={el.config.elementConfig.type}
+          placeholder={el.config.elementConfig.placeholder}
+          value={el.config.value}
+          onChange={(event) => this.inputChangedHandler(event, el.id)}
+        />
+      </FormGroup>
     ));
 
     return (
-      <form
-        onSubmit={this.props.login}
-        autoComplete='off'
-        className={classes.LoginForm}>
-        {form}
-        <Button btnType='submit'>Login</Button>
-      </form>
+      <div className={classes.LoginForm}>
+        <Form inline onSubmit={this.loginHandler} autoComplete='off'>
+          {form}
+          <Button type='submit' variant='primary'>
+            Login
+          </Button>
+        </Form>
+      </div>
     );
   }
 }
 
-export default LoginForm;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    isAuthenticated: state.auth.token !== null,
+    authRedirectPath: state.auth.authRedirectPath,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, password, isSignUp) =>
+      dispatch(actions.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/")),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -1,13 +1,12 @@
-.LoginForm{
- background-color: red;
-    text-align: center;
-    padding: 10px;
+.LoginForm {
+  text-align: center;
+  padding: 5px;
 }
 
-.LoginForm input{
-    margin: 0 0 5px;
+.LoginForm input {
+  margin: 5px;
 }
 
-.LoginForm button{
-    margin: 0 0 5px;
+.LoginForm button {
+  margin: 5px;
 }
