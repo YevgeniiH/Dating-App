@@ -13,6 +13,22 @@ const asyncAuth = asyncComponent(() => {
   return import("./containers/Auth/LoginForm/LoginForm");
 });
 
+const asyncRegister = asyncComponent(() => {
+  return import("./containers/Auth/RegisterForm/RegisterForm");
+});
+
+const asyncLists = asyncComponent(() => {
+  return import("./components/Lists/Lists");
+});
+
+const asyncMessages = asyncComponent(() => {
+  return import("./components/Messages/Messages");
+});
+
+const asyncMembers = asyncComponent(() => {
+  return import("./components/Members/Members");
+});
+
 class App extends React.Component {
   state = {
     items: [],
@@ -28,6 +44,7 @@ class App extends React.Component {
     let routes = (
       <Switch>
         <Route path='/auth' component={asyncAuth} />
+        <Route path='/register' component={asyncRegister} />
         <Route path='/' exact component={Home} />
         <Redirect to='/' />
       </Switch>
@@ -36,6 +53,10 @@ class App extends React.Component {
       routes = (
         <Switch>
           <Route path='/auth' component={asyncAuth} />
+          <Route path='/register' component={asyncRegister} />
+          <Route path='/lists' component={asyncLists} />
+          <Route path='/messages' component={asyncMessages} />
+          <Route path='/members' component={asyncMembers} />
           <Route path='/logout' component={Logout} />
           <Route path='/' exact component={Home} />
           <Redirect to='/' />

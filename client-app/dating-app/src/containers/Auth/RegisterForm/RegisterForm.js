@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { checkValidity, updateObject } from "../../../shared/utility";
-import { Form, FormControl, FormGroup, Button } from "react-bootstrap";
+import { Form, FormGroup, Button } from "react-bootstrap";
 import * as actions from "../../../store/actions/index";
-import classes from "./LoginForm.module.css";
+import classes from "./RegisterForm.module.css";
 import { Redirect } from "react-router";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 class LoginForm extends Component {
   state = {
@@ -41,12 +39,6 @@ class LoginForm extends Component {
     },
   };
 
-  componentDidMount() {
-    if (this.props.authRedirectPath !== "/") {
-      this.props.onSetAuthRedirectPath();
-    }
-  }
-
   inputChangedHandler = (event, controlName) => {
     const updatedControls = updateObject(this.state.controls, {
       [controlName]: updateObject(this.state.controls[controlName], {
@@ -62,19 +54,19 @@ class LoginForm extends Component {
     this.setState({ controls: updatedControls });
   };
 
-  loginHandler = (event) => {
+  registerHandler = (event) => {
     event.preventDefault();
     this.props.onAuth(
       this.state.controls.email.value,
       this.state.controls.password.value,
-      false
+      true
     );
   };
 
   render() {
     let authRedirect = null;
     if (this.props.isAuthenticated) {
-      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+      authRedirect = <Redirect to='/' />;
     }
 
     const formElementsArray = [];
@@ -87,7 +79,7 @@ class LoginForm extends Component {
 
     let form = formElementsArray.map((el) => (
       <FormGroup key={el.id}>
-        <FormControl
+        <Form.Control
           type={el.config.elementConfig.type}
           placeholder={el.config.elementConfig.placeholder}
           value={el.config.value}
@@ -97,25 +89,17 @@ class LoginForm extends Component {
     ));
 
     return (
-      <div className={classes.LoginForm}>
+      <div className={classes.RegisterForm}>
         {authRedirect}
-        <Form onSubmit={this.loginHandler} autoComplete='off'>
+        <Form onSubmit={this.registerHandler} autoComplete='off'>
           {form}
           <Button type='submit' variant='primary'>
-            Login
+            Register
+          </Button>
+          <Button type='cancel' variant='secondary'>
+            Cancel
           </Button>
         </Form>
-        <ToastContainer
-          position='bottom-right'
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </div>
     );
   }

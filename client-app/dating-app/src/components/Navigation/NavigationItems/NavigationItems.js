@@ -9,7 +9,7 @@ export default class NavigationItems extends Component {
         <NavigationItem link='/'>Dating App</NavigationItem>
         {this.props.isAuthenticated ? (
           <ul className={classes.NavigationItems}>
-            <NavigationItem link='/matches'>Matches</NavigationItem>
+            <NavigationItem link='/members'>Matches</NavigationItem>
             <NavigationItem link='/lists'>Lists</NavigationItem>
             <NavigationItem link='/messages'>Messages</NavigationItem>
           </ul>

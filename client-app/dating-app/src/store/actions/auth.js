@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import * as localStorageConst from "../localStorageConst";
+import { toast } from "react-toastify";
 
 export const authStart = () => {
   return {
@@ -43,7 +44,6 @@ export const auth = (email, password, isSignUp) => {
     const authData = {
       UserName: email,
       Password: password,
-      returnSecureToken: true,
     };
 
     if (!isSignUp) {
@@ -60,9 +60,26 @@ export const auth = (email, password, isSignUp) => {
           }
         })
         .catch((e) => {
-          dispatch(authFail(e.response.data.error));
+          dispatch(authFail(e.response.data));
+          toast.error(e.response.data);
         });
     } else {
+      axios
+        .post("/account/register", authData)
+        .then((response) => {
+          const data = response.data;
+          if (data) {
+            localStorage.setItem(
+              localStorageConst.USER_DATA,
+              JSON.stringify(data)
+            );
+            dispatch(authSuccess(data.token, data.userName));
+          }
+        })
+        .catch((e) => {
+          dispatch(authFail(e.response.data));
+          toast.error(e.response.data);
+        });
     }
   };
 };
