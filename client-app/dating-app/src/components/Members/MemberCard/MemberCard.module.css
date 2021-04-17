@@ -1,0 +1,54 @@
+.Card {
+  width: 200px;
+  text-align: center;
+  margin: 30px;
+  overflow: hidden;
+  transform: scale(1, 1);
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+}
+
+.Card img {
+  transform: scale(1, 1);
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+}
+
+.Card:hover img {
+  transform: scale(1.2, 1.2);
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+  opacity: 0.7;
+}
+
+.List {
+  display: inline;
+  align-items: center;
+  align-self: center;
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+  display: inline;
+  list-style-type: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 120px;
+  margin-right: auto;
+  margin-left: auto;
+  opacity: 0;
+}
+
+.List li {
+  display: inline;
+  align-self: center;
+  margin: 5px;
+}
+
+.Card:hover .List {
+  opacity: 1;
+}
+
+.animate {
+  transition: all 0.3s ease-in-out;
+}
