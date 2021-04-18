@@ -8,8 +8,10 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import store from "./store/index";
 import "bootstrap/dist/css/bootstrap.min.css";
+import setupInterceptors from "./interceptors/interceptors";
 
 axios.defaults.baseURL = "https://localhost:5001/api";
+setupInterceptors(store);
 
 ReactDOM.render(
   <React.StrictMode>
