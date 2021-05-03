@@ -6,7 +6,9 @@ export default class NavigationItems extends Component {
   render() {
     const nav = (
       <ul className={classes.NavigationItems}>
-        <NavigationItem link='/'>Dating App</NavigationItem>
+        <NavigationItem link='/' exact>
+          Dating App
+        </NavigationItem>
         {this.props.isAuthenticated ? (
           <ul className={classes.NavigationItems}>
             <NavigationItem link='/members'>Matches</NavigationItem>

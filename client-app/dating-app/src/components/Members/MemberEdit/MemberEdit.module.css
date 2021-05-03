@@ -1,0 +1,35 @@
+.MemberEdit {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.CardFooter {
+  padding: 10px 15px;
+  background-color: white;
+  border-top: none;
+}
+
+.imgThumbnail {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 85%;
+  height: 85%;
+}
+
+.Card {
+  margin: 25px;
+  width: 85%;
+}
+
+.CardBody {
+  padding: 0 25px;
+}
+
+.BtnGroup {
+  width: stretch;
+}

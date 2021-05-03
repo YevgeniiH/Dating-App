@@ -43,24 +43,24 @@ class MemberDetail extends Component {
                   alt={member.knownAs}
                 />
                 <Card.Body className={classes.CardBody}>
-                  <Card.Text>
+                  <div>
                     <strong>Location:</strong>
                     <p>
                       {member.city}, {member.country}
                     </p>
-                  </Card.Text>
-                  <Card.Text>
+                  </div>
+                  <div>
                     <strong>Age:</strong>
                     <p>{member.age}</p>
-                  </Card.Text>
-                  <Card.Text>
+                  </div>
+                  <div>
                     <strong>Created:</strong>
                     <p>{member.lastActive}</p>
-                  </Card.Text>
-                  <Card.Text>
+                  </div>
+                  <div>
                     <strong>Member since:</strong>
                     <p>{member.created}</p>
-                  </Card.Text>
+                  </div>
                 </Card.Body>
                 <Card.Footer className={classes.CardFooter}>
                   <ButtonGroup className={classes.BtnGroup}>

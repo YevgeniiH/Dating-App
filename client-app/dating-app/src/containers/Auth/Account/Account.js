@@ -11,6 +11,10 @@ function Account(props) {
     history.push("/logout");
   }
 
+  function editProfileHandler() {
+    history.push("/member/edit");
+  }
+
   return (
     <div className={classes.Account}>
       <DropdownButton
@@ -18,7 +22,7 @@ function Account(props) {
         menuAlign='right'
         id='account_dropdown'
         variant='flat'>
-        <Dropdown.Item>Edit profile</Dropdown.Item>
+        <Dropdown.Item onClick={editProfileHandler}>Edit profile</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item onClick={logoutHandler}>Logout</Dropdown.Item>
       </DropdownButton>

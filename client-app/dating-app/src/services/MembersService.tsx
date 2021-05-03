@@ -9,4 +9,8 @@ export class MemberService {
   getMember(username: string) {
     return axios.get<Member>("/users/" + username);
   }
+
+  updateMember(member: Member) {
+    return axios.put("/users/", member);
+  }
 }

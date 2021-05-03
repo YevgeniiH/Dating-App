@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import axios from "axios";
 import { MemberService } from "../../services/MembersService";
-import { CardDeck, Spinner } from "react-bootstrap";
+import { CardDeck } from "react-bootstrap";
 import MemberCard from "./MemberCard/MemberCard";
 import classes from "./Members.module.css";
+import Spinner from "../UI/Spinner/Spinner";
 
 class Members extends Component {
   state = {
@@ -15,6 +16,7 @@ class Members extends Component {
   memberService = new MemberService();
 
   componentDidMount() {
+    console.log("cdm loadMembers");
     this.loadMembers();
   }
 
@@ -36,17 +38,7 @@ class Members extends Component {
 
     return (
       <div className={classes.Members}>
-        <CardDeck>
-          {this.state.loaded ? (
-            list
-          ) : (
-            <Spinner
-              animation='border'
-              variant='primary'
-              style={{ marginLeft: "20px" }}
-            />
-          )}
-        </CardDeck>
+        <CardDeck>{this.state.loaded ? list : <Spinner />}</CardDeck>
       </div>
     );
   }

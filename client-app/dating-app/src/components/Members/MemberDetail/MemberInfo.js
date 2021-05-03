@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import classes from "./MemberInfo.module.css";
 import Carousel from "react-gallery-carousel";
 
 class MemberInfo extends Component {

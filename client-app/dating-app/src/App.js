@@ -9,6 +9,7 @@ import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Logout from "./containers/Auth/Account/Logout/Logout";
 import Home from "./containers/Home/Home";
 import MemberDetail from "./components/Members/MemberDetail/MemberDetail";
+import MemberEdit from "./components/Members/MemberEdit/MemberEdit";
 
 const asyncAuth = asyncComponent(() => {
   return import("./containers/Auth/LoginForm/LoginForm");
@@ -58,6 +59,7 @@ class App extends React.Component {
           <Route path='/lists' component={asyncLists} />
           <Route path='/messages' component={asyncMessages} />
           <Route path='/members/:username' component={MemberDetail} />
+          <Route path='/member/edit' component={MemberEdit} />
           <Route path='/members' component={asyncMembers} />
           <Route path='/logout' component={Logout} />
           <Route path='/' exact component={Home} />
