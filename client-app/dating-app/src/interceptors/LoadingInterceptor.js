@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Start_Loading, Finish_Loading } from "../store/actions";
 
-export default function BusyInterceptor(store) {
+export default function LoadingInterceptor(store) {
   axios.interceptors.request.use(
     function (config) {
       store.dispatch(Start_Loading());

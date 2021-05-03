@@ -40,7 +40,7 @@ class MemberInfo extends Component {
             <Carousel
               images={this.state.photos}
               canAutoPlay={false}
-              objectFit=''
+              objectFit='fill'
               style={{
                 width: "500px",
                 height: "500px",
